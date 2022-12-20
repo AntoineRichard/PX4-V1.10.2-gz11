@@ -251,14 +251,6 @@ __EXPORT int		param_set(param_t param, const void *val);
 __EXPORT int		param_set_default_value(param_t param, const void *val);
 
 /**
- * Mark a parameter as used. Only marked parameters will be sent to a GCS.
- * A call to param_find() will mark a param as used as well.
- *
- * @param param		A handle returned by param_find or passed by param_foreach.
- */
-__EXPORT void		param_set_used(param_t param);
-
-/**
  * Set the value of a parameter, but do not notify the system about the change.
  *
  * @param param		A handle returned by param_find or passed by param_foreach.
@@ -287,8 +279,6 @@ __EXPORT void		param_reset_all(void);
  */
 __EXPORT void		param_reset_excludes(const char *excludes[], int num_excludes);
 
-typedef bool(*param_filter_func)(param_t handle);
-
 /**
  * Reset only specific parameters to their default values.
  *
@@ -306,6 +296,7 @@ __EXPORT void		param_reset_specific(const char *resets[], int num_resets);
  * 			the parameter should be exported. No filtering if nullptr is passed.
  * @return		Zero on success, nonzero on failure.
  */
+typedef bool(*param_filter_func)(param_t handle);
 __EXPORT int		param_export(const char *filename, param_filter_func filter);
 
 /**
